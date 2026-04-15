@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8-Week Hyrox Doubles Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#004A80;
+  --orange:#FF9900;
+  --green:#006738;
+  --red:#ED1C24;
+  --grey:#A7A9AB;
+  --dark:#404041;
+  --bg:#0d1117;
+  --surface:#161b22;
+  --surface2:#1c2330;
+  --border:#30363d;
+  --text:#e6edf3;
+  --text-muted:#8b949e;
+  --text-dim:#6e7681;
+}
+html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
+
+/* HEADER */
+.header{
+  background:linear-gradient(135deg,var(--navy) 0%,#002d4f 100%);
+  padding:28px 24px 22px;
+  border-bottom:1px solid rgba(255,153,0,.25);
+  position:relative;
+  overflow:hidden;
+}
+.header::before{
+  content:'';position:absolute;top:-40px;right:-40px;width:220px;height:220px;
+  border-radius:50%;background:rgba(255,153,0,.06);
+  border:1px solid rgba(255,153,0,.12);
+}
+.header::after{
+  content:'';position:absolute;bottom:-60px;right:60px;width:140px;height:140px;
+  border-radius:50%;background:rgba(255,153,0,.04);
+  border:1px solid rgba(255,153,0,.08);
+}
+.header-tag{font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;}
+.header-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:6px;}
+.header-sub{font-size:13px;color:rgba(255,255,255,.55);font-weight:300;}
+.header-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.hpill{font-family:'DM Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid;font-weight:500;}
+.hpill.blue{color:var(--orange);border-color:rgba(255,153,0,.35);background:rgba(255,153,0,.08);}
+.hpill.grey{color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.05);}
+
+/* MAIN NAV */
+.main-nav{display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--surface);overflow-x:auto;scrollbar-width:none;}
+.main-nav::-webkit-scrollbar{display:none;}
+.mnav-btn{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;padding:12px 18px;color:var(--text-muted);cursor:pointer;border:none;background:none;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;letter-spacing:.02em;}
+.mnav-btn.on{color:var(--orange);border-bottom-color:var(--orange);}
+.mnav-btn:hover:not(.on){color:var(--text);}
+
+/* PANELS */
+.panel{display:none;padding:20px 16px;}
+.panel.on{display:block;}
+
+/* PHASE TABS */
+.phase-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.phase-btn{font-family:'DM Mono',monospace;font-size:11px;padding:6px 14px;border-radius:4px;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);cursor:pointer;transition:all .2s;letter-spacing:.04em;}
+.phase-btn.on.p1{background:var(--navy);color:#fff;border-color:var(--navy);}
+.phase-btn.on.p2{background:var(--green);color:#fff;border-color:var(--green);}
+.phase-btn.on.p3{background:#a05c00;color:var(--orange);border-color:rgba(255,153,0,.5);}
+.phase-btn.on.p4{background:var(--dark);color:#fff;border-color:var(--dark);}
+
+/* WEEK TABS */
+.week-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px;}
+.week-btn{font-family:'DM Mono',monospace;font-size:11px;padding:4px 10px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;transition:all .15s;}
+.week-btn.on{background:var(--surface2);border-color:var(--text-muted);color:var(--text);}
+
+/* PHASE INFO */
+.phase-info{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--orange);border-radius:6px;padding:12px 16px;margin-bottom:16px;font-size:12.5px;color:var(--text-muted);line-height:1.7;}
+.phase-info strong{color:var(--text);font-weight:500;}
+
+/* RPE BADGE */
+.rpe-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;padding:2px 7px;border-radius:3px;margin-left:6px;background:rgba(255,153,0,.12);color:var(--orange);border:1px solid rgba(255,153,0,.25);}
+
+/* DAY GRID */
+.day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+@media(max-width:700px){.day-grid{grid-template-columns:1fr;}}
+@media(min-width:701px) and (max-width:900px){.day-grid{grid-template-columns:1fr 1fr;}}
+
+.day-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.day-header{padding:10px 13px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;color:#fff;text-transform:uppercase;}
+.dh-a{background:var(--navy);}
+.dh-b{background:var(--green);}
+.dh-c{background:#7a3e00;border-color:var(--orange);}
+.day-subtype{font-size:10px;font-family:'DM Mono',monospace;padding:5px 13px;color:var(--text-dim);background:var(--surface2);border-bottom:1px solid var(--border);letter-spacing:.06em;text-transform:uppercase;}
+.day-body{padding:10px 13px;}
+.ex-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid rgba(48,54,61,.7);}
+.ex-row:last-child{border-bottom:none;}
+.ex-name{font-size:12px;color:var(--text);line-height:1.4;flex:1;}
+.ex-sets{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);white-space:nowrap;flex-shrink:0;}
+.mod-tag{display:inline-block;font-size:9px;font-family:'DM Mono',monospace;padding:1px 5px;border-radius:2px;background:rgba(255,153,0,.12);color:var(--orange);border:1px solid rgba(255,153,0,.25);margin-left:4px;vertical-align:middle;}
+.day-footer{padding:7px 13px 10px;display:flex;gap:5px;flex-wrap:wrap;border-top:1px solid var(--border);}
+.ftag{font-family:'DM Mono',monospace;font-size:9px;padding:2px 6px;border-radius:2px;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);}
+
+/* WARMUP PANEL */
+.wu-section{margin-bottom:20px;}
+.wu-section-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:10px;letter-spacing:.03em;}
+.wu-step{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(48,54,61,.5);}
+.wu-step:last-child{border-bottom:none;}
+.wu-num{width:22px;height:22px;border-radius:50%;background:var(--navy);border:1px solid rgba(0,74,128,.6);color:#fff;font-family:'DM Mono',monospace;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.wu-label{font-size:12.5px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.wu-desc{font-size:12px;color:var(--text-muted);line-height:1.65;}
+.wu-time{font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);margin-top:3px;}
+
+/* INJURY PANELS */
+.inj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+@media(max-width:700px){.inj-grid{grid-template-columns:1fr;}}
+.inj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.inj-header{padding:10px 14px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.04em;color:#fff;}
+.inj-h-ankle{background:linear-gradient(90deg,#1a3a5c,#0a2840);}
+.inj-h-knee{background:linear-gradient(90deg,#1a3a1a,#0a280a);}
+.inj-h-thoracic{background:linear-gradient(90deg,#3a1a00,#281200);}
+.inj-body{padding:12px 14px;}
+.inj-item{padding:6px 0;border-bottom:1px solid rgba(48,54,61,.5);font-size:12px;color:var(--text-muted);line-height:1.6;}
+.inj-item:last-child{border-bottom:none;}
+.inj-item strong{color:var(--text);font-weight:500;display:block;margin-bottom:2px;}
+
+/* SIGNALS */
+.signal-block{border-radius:8px;padding:14px 16px;margin-bottom:10px;border:1px solid;}
+.sig-stop{background:rgba(237,28,36,.08);border-color:rgba(237,28,36,.3);}
+.sig-mod{background:rgba(255,153,0,.07);border-color:rgba(255,153,0,.3);}
+.sig-cont{background:rgba(0,103,56,.08);border-color:rgba(0,103,56,.35);}
+.sig-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.sig-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sig-stop .sig-dot{background:var(--red);}
+.sig-mod .sig-dot{background:var(--orange);}
+.sig-cont .sig-dot{background:#4caf79;}
+.sig-stop .sig-title{color:var(--red);}
+.sig-mod .sig-title{color:var(--orange);}
+.sig-cont .sig-title{color:#4caf79;}
+.sig-item{font-size:12px;color:var(--text-muted);padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);line-height:1.6;}
+.sig-item:last-child{border-bottom:none;}
+
+/* SELF CHECK */
+.check-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px;}
+.check-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);margin-bottom:4px;letter-spacing:.08em;}
+.check-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.check-desc{font-size:12px;color:var(--text-muted);line-height:1.7;}
+.check-pass{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px;background:rgba(0,103,56,.15);color:#4caf79;border:1px solid rgba(76,175,121,.3);margin-top:6px;}
+.check-fail{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px;background:rgba(255,153,0,.1);color:var(--orange);border:1px solid rgba(255,153,0,.3);margin-top:6px;}
+
+/* LEGEND */
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);}
+.leg-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+
+/* SECTION TITLE */
+.section-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin:20px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.section-title:first-child{margin-top:0;}
+
+/* TAPER NOTE */
+.taper-note{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--dark);border-radius:6px;padding:14px 16px;font-size:12.5px;color:var(--text-muted);line-height:1.7;}
+
+/* CLINICAL NOTE */
+.clinical-note{background:rgba(0,74,128,.08);border:1px solid rgba(0,74,128,.3);border-radius:6px;padding:12px 14px;font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:16px;}
+.clinical-note strong{color:var(--text);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-tag">Exercise Science · Reconditioning Protocol</div>
+  <div class="header-title">8-Week Hyrox Doubles<br>Training Program</div>
+  <div class="header-sub">3 sessions/week · ~90 min · Injury-modified</div>
+  <div class="header-pills">
+    <div class="hpill blue">Doubles Division</div>
+    <div class="hpill grey">Right Ankle</div>
+    <div class="hpill grey">Right Knee / Hamstring</div>
+    <div class="hpill grey">T10–12 Facet</div>
+  </div>
+</div>
+
+<nav class="main-nav">
+  <button class="mnav-btn on" onclick="showPanel('program')">Program</button>
+  <button class="mnav-btn" onclick="showPanel('warmup')">Warm-up Protocols</button>
+  <button class="mnav-btn" onclick="showPanel('injury')">Injury Modifications</button>
+  <button class="mnav-btn" onclick="showPanel('signals')">Stop / Modify / Continue</button>
+  <button class="mnav-btn" onclick="showPanel('selfcheck')">Weekly Self-Check</button>
+  <button class="mnav-btn" onclick="showPanel('log')">Training Log</button>
+</nav>
+
+<!-- ===================== PROGRAM PANEL ===================== -->
+<div class="panel on" id="panel-program">
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--navy)"></div>Day A — Strength</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Day B — Conditioning</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--orange)"></div>Day C — Hybrid</div>
+    <div class="leg-item"><div style="font-family:'DM Mono',monospace;font-size:9px;padding:1px 5px;border-radius:2px;background:rgba(255,153,0,.12);color:var(--orange);border:1px solid rgba(255,153,0,.25);">mod</div>Injury modification</div>
+  </div>
+
+  <div class="phase-row">
+    <button class="phase-btn p1 on" onclick="setPhase(1)">PHASE 1 — Foundation</button>
+    <button class="phase-btn p2" onclick="setPhase(2)">PHASE 2 — Build</button>
+    <button class="phase-btn p3" onclick="setPhase(3)">PHASE 3 — Race-specific</button>
+    <button class="phase-btn p4" onclick="setPhase(4)">PHASE 4 — Taper</button>
+  </div>
+
+  <div class="phase-info" id="phase-info"></div>
+
+  <div class="week-row" id="week-row"></div>
+
+  <div class="day-grid" id="day-grid"></div>
+
+  <div id="phase-notes"></div>
+</div>
+
+<!-- ===================== WARM-UP PANEL ===================== -->
+<div class="panel" id="panel-warmup">
+  <div class="clinical-note">
+    <strong>Clinical rationale:</strong> Warm-up is a non-negotiable injury mitigation step given your profile. Each session type has a targeted sequence. Do not skip or abbreviate — with T10–12 facet involvement and right lower limb instability, cold loading is the highest-risk scenario.
+  </div>
+
+  <div class="section-title">Day A — Strength Day (15–18 min total)</div>
+  <div class="wu-section">
+    <div class="wu-step">
+      <div class="wu-num">1</div>
+      <div>
+        <div class="wu-label">General elevation — Bike or Rower</div>
+        <div class="wu-desc">5 min @ RPE 3–4. Nasal breathing only. No effort — this is tissue warming, not a training stimulus. Gradually increase cadence toward minute 4.</div>
+        <div class="wu-time">5 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">2</div>
+      <div>
+        <div class="wu-label">Thoracic foam roller mobilisation</div>
+        <div class="wu-desc">Foam roller at T8–T10. Support head with hands. Extend gently over roller in 5 × 5-second holds. Move roller one segment toward T12 and repeat. This is gentle mobilisation — not aggressive cracking. Do this before axial loading, not after.</div>
+        <div class="wu-time">3–4 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">3</div>
+      <div>
+        <div class="wu-label">Hip flexor / psoas stretch</div>
+        <div class="wu-desc">Half-kneeling position, 45s each side. Add posterior pelvic tilt at end-range. This decompresses the thoracolumbar junction and releases hip flexor tension before loaded squatting movements.</div>
+        <div class="wu-time">2 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">4</div>
+      <div>
+        <div class="wu-label">Ankle CARs (Controlled Articular Rotations) <span class="mod-tag">mod</span></div>
+        <div class="wu-desc">Seated, right ankle: slow full-range circumduction, 10 rotations each direction. Then 10 × slow dorsiflexion/plantarflexion. This restores synovial fluid distribution and wakes up the proprioceptive pathway before any loading.</div>
+        <div class="wu-time">2 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">5</div>
+      <div>
+        <div class="wu-label">Glute activation sequence</div>
+        <div class="wu-desc">Banded clamshells: 2 × 12 each side. Banded glute bridge: 2 × 10. This activates the glute med and max before any squat or hinge pattern — especially important given right hamstring atrophy and the compensatory glute inhibition that typically follows.</div>
+        <div class="wu-time">3 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">6</div>
+      <div>
+        <div class="wu-label">Movement prep — Day A specific</div>
+        <div class="wu-desc">2 × 5 bodyweight goblet squats (slow, to depth), 2 × 5 RDL with empty barbell or light kettlebell. Establish movement pattern before adding load. Check for symmetry in hamstring tension left vs right.</div>
+        <div class="wu-time">2 min</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Day B — Conditioning Day (12–14 min total)</div>
+  <div class="wu-section">
+    <div class="wu-step">
+      <div class="wu-num">1</div>
+      <div>
+        <div class="wu-label">Easy ski erg or bike — arms-only focus</div>
+        <div class="wu-desc">5 min @ RPE 3. In week 1, begin every ski erg session with 60 seconds of arms-only skiing to establish the pull-through pattern before adding leg drive. Release the handle at hip height — pulling through to full hip extension risks T10–12 compressive extension at end-range.</div>
+        <div class="wu-time">5 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">2</div>
+      <div>
+        <div class="wu-label">Dynamic movement prep</div>
+        <div class="wu-desc">Walking hip circles × 10 each, leg swings (front-to-back + side-to-side) × 10 each, high knees × 20m, butt kicks × 20m. Raise core temperature and lubricate the hip joints before any running or sled work.</div>
+        <div class="wu-time">4 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">3</div>
+      <div>
+        <div class="wu-label">Right ankle proprioception activation <span class="mod-tag">mod</span></div>
+        <div class="wu-desc">Single-leg stance on right foot, eyes open: 3 × 20 seconds. Progress to eyes closed once stable. Do this before any running or sled push — it pre-activates the peroneal stabilisers and dramatically reduces ankle re-injury risk.</div>
+        <div class="wu-time">2–3 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">4</div>
+      <div>
+        <div class="wu-label">Sled or carry movement prep</div>
+        <div class="wu-desc">If sled is programmed: 1 × 10m push with an empty or near-empty sled before your working sets. Establish posture — forward lean from ankles, not waist. Brace the thoracic spine and maintain neutral extension throughout.</div>
+        <div class="wu-time">2 min</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Day C — Hybrid Day (10–12 min total)</div>
+  <div class="wu-section">
+    <div class="wu-step">
+      <div class="wu-num">1</div>
+      <div>
+        <div class="wu-label">Easy 3–4 min jog</div>
+        <div class="wu-desc">Conversational pace. Land midfoot. If the right ankle feels stiff, shorten to 2 min and add more ankle mobility before progressing. Do not run through pre-existing stiffness that hasn't resolved — it's a load amplifier.</div>
+        <div class="wu-time">3–4 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">2</div>
+      <div>
+        <div class="wu-label">Open books — thoracic rotation <span class="mod-tag">mod</span></div>
+        <div class="wu-desc">Side-lying open books: 10 each side, slow and controlled. This is the primary pre-session thoracic mobility drill for the T10–12 segment. If right rotation is restricted or painful, do not load the thoracic spine that session until mobility improves post warm-up.</div>
+        <div class="wu-time">3 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">3</div>
+      <div>
+        <div class="wu-label">Ankle and hip mobility flow</div>
+        <div class="wu-desc">World's greatest stretch × 5 each side (includes ankle dorsiflexion component). Lateral lunge with ankle reach × 8 each side. These address the combined hip/ankle demand of the hybrid session's varied movements.</div>
+        <div class="wu-time">3 min</div>
+      </div>
+    </div>
+    <div class="wu-step">
+      <div class="wu-num">4</div>
+      <div>
+        <div class="wu-label">Session-specific movement prep</div>
+        <div class="wu-desc">5 × wall balls @ sub-maximal height, 1 × easy farmers carry 15m, 1 × ski erg 30s easy. Run through the day's movements at low intensity before your working sets begin.</div>
+        <div class="wu-time">2 min</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== INJURY PANEL ===================== -->
+<div class="panel" id="panel-injury">
+  <div class="clinical-note">
+    <strong>Clinical context:</strong> These modifications are not optional progressions — they are load management decisions based on your injury history. They remain in place at all training intensities. The right lower limb chain and T10–12 segment are treated as sentinel areas throughout all 8 weeks.
+  </div>
+
+  <div class="inj-grid">
+    <div class="inj-card">
+      <div class="inj-header inj-h-ankle">Right Ankle</div>
+      <div class="inj-body">
+        <div class="inj-item"><strong>Ankle CARs every session</strong>Performed during warm-up (seated, full circumduction × 10 each direction + 10 × dorsiflexion/plantarflexion) before any loading.</div>
+        <div class="inj-item"><strong>Single-leg balance pre-activation</strong>Eyes-open single-leg stance on right foot before every session: 3 × 20s. Pre-activates peroneal stabilisers. Progress to eyes-closed from week 3 if stable.</div>
+        <div class="inj-item"><strong>No unilateral plyometric loading</strong>No single-leg jumps, box jumps, or bounding on the right side throughout. Bilateral only until proprioception is rated stable at the week 3 check.</div>
+        <div class="inj-item"><strong>Tape or brace for running sessions</strong>Use rigid strapping tape or a lace-up ankle brace for all running and sled days. Not optional in weeks 1–4. Reassess at week 5.</div>
+        <div class="inj-item"><strong>Running surface preference</strong>Flat, even surfaces only. Avoid trail, grass, or cambered surfaces through the first four weeks. Treadmill is acceptable for interval work.</div>
+        <div class="inj-item"><strong>Pre-symptomatic response</strong>If the ankle feels "off" pre-session — reduce unilateral loading and cut run volume 50% that day. Do not push through developing symptoms.</div>
+      </div>
+    </div>
+    <div class="inj-card">
+      <div class="inj-header inj-h-knee">Right Knee / Hamstring</div>
+      <div class="inj-body">
+        <div class="inj-item"><strong>B-stance and left-lead bias (Phase 1)</strong>All bilateral lower body exercises use a left-leg-lead stance in weeks 1–2. Right limb participates but carries less load. B-stance RDL, single-leg hip thrust left lead.</div>
+        <div class="inj-item"><strong>Nordic curl negatives only (Phase 1–2)</strong>Begin Phase 1 with 2 × 5 eccentric-only Nordic curls (controlled 4-second lower, partner or foot anchor). Do not attempt the concentric phase until right hamstring symmetry test passes consistently.</div>
+        <div class="inj-item"><strong>Bulgarian split squat — depth management</strong>Right leg behind: reduce ROM by approximately 20% compared to left. Watch for right knee caving medially on descent — if present, reduce depth further and add VMO terminal knee extensions (banded TKEs) as a correction drill.</div>
+        <div class="inj-item"><strong>No loaded knee flexion beyond 90° (Phase 1)</strong>Leg curls, heavy lunges, and deep step-ups are excluded in weeks 1–2. Introduce cautiously from week 3 only if hamstring symmetry is improving.</div>
+        <div class="inj-item"><strong>Right hamstring palpation check</strong>After every strength session: palpate the right proximal hamstring (ischial tuberosity insertion). Any focal tenderness = modify next session and do not progress the Nordic protocol.</div>
+        <div class="inj-item"><strong>Post-session asymmetry response</strong>If right hamstring is significantly more sore than left post-session: reduce hamstring loading across all sessions that week. Do not progress until symmetry returns.</div>
+      </div>
+    </div>
+    <div class="inj-card">
+      <div class="inj-header inj-h-thoracic">T10–12 Facet</div>
+      <div class="inj-body">
+        <div class="inj-item"><strong>Daily thoracic mobilisation before every session</strong>Foam roller extension at T8–T12: 5 × 5-second holds per segment, moving caudally. Always done when tissue is cold — this segment mobilises best before loading, not after.</div>
+        <div class="inj-item"><strong>Seated cable row priority</strong>All horizontal rowing uses seated cable or chest-supported incline bench position. No unsupported bent-over rows — the lumbar and thoracic loading angle creates compressive shear at the facet joints.</div>
+        <div class="inj-item"><strong>Farmers carry — load management</strong>Moderate loads only, never near-maximal. If localised T10–12 pain occurs during any carry, set the load down immediately. Do not walk through thoracic pain under axial load.</div>
+        <div class="inj-item"><strong>Ski erg — technique discipline</strong>Release the handle at hip height. Pulling through to full hip extension risks compressive extension at T10–12 end-range. In week 1, arms-only skiing for the first 60s of every interval before adding leg drive.</div>
+        <div class="inj-item"><strong>Pre-session ache protocol</strong>Dull T10–12 ache pre-session: reduce all axial loading by 30% and skip sled that session. Substitute stationary bike or rower as the cardio element — these place significantly lower demand on the thoracic segment.</div>
+        <div class="inj-item"><strong>Referred pain = stop immediately</strong>If pain refers around the ribcage, into the abdomen, or produces any lower limb neurological symptom — stop immediately and seek same-day clinical review. This is not a "train through it" scenario.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SIGNALS PANEL ===================== -->
+<div class="panel" id="panel-signals">
+  <div class="clinical-note">
+    <strong>Decision framework:</strong> These signals are calibrated to your specific injury profile. In the absence of injury history, some of these "stop" signals might be assessed differently. With right lower limb instability, hamstring atrophy, and facet involvement active, the threshold for stopping or modifying is appropriately lower than a healthy athlete profile.
+  </div>
+
+  <div class="signal-block sig-stop">
+    <div class="sig-title"><div class="sig-dot"></div>STOP — Seek clinical review before your next session</div>
+    <div class="sig-item">Any radicular or referred pain originating from the thoracic region — around the ribcage, into the abdomen, or toward the lower limbs.</div>
+    <div class="sig-item">Focal right hamstring tenderness at the ischial tuberosity insertion that begins during or after running (not DOMS — sharp, localised onset).</div>
+    <div class="sig-item">Right ankle swelling during or within 2 hours of completing a session.</div>
+    <div class="sig-item">Sharp, catching, or locking sensation in the right knee under any loaded movement.</div>
+    <div class="sig-item">Any symptom rated 7/10 or above on your subjective pain scale during exercise that is not clearly bilateral and effort-related.</div>
+    <div class="sig-item">Neurological symptoms at any point: numbness, tingling, or weakness in either lower limb.</div>
+  </div>
+
+  <div class="signal-block sig-mod">
+    <div class="sig-title"><div class="sig-dot"></div>MODIFY — Reduce load, substitute, and monitor closely</div>
+    <div class="sig-item"><strong style="color:var(--text)">Right hamstring asymmetry post-session:</strong> Right hamstring significantly more sore than left after a strength day — reduce hamstring loading 30–40% across all sessions that week. Do not progress the Nordic curl protocol.</div>
+    <div class="sig-item"><strong style="color:var(--text)">Dull pre-session T10–12 ache:</strong> Reduce all axial loading 30% for the session. Skip sled. Substitute bike or rower for any conditioning cardio element. Perform an extended thoracic foam roll sequence before proceeding.</div>
+    <div class="sig-item"><strong style="color:var(--text)">Pre-symptomatic right ankle:</strong> Ankle feels "off," hypersensitive, or unstable pre-session — tape it, reduce unilateral loading to zero, and cut planned run volume by 50%. Continue bilateral conditioning only.</div>
+    <div class="sig-item"><strong style="color:var(--text)">Right knee medial tracking pain on descent:</strong> Reduce squat/split squat depth immediately. Add 2 × 15 VMO terminal knee extensions (banded TKEs) as corrective work at the end of the session. Assess cause (ankle compensation, glute weakness) before next session.</div>
+    <div class="sig-item"><strong style="color:var(--text)">HRV/HR under-recovery signal:</strong> Resting HR 5–7+ bpm above baseline or HRV 10%+ below 7-day average — downgrade entire session to technique and mobility work only. Do not push training load against accumulated fatigue with this injury profile.</div>
+  </div>
+
+  <div class="signal-block sig-cont">
+    <div class="sig-title"><div class="sig-dot"></div>CONTINUE — Normal training response, proceed as programmed</div>
+    <div class="sig-item">Bilateral posterior chain DOMS (glutes, hamstrings) 24–48 hours after strength days. Symmetric soreness is a positive adaptation signal.</div>
+    <div class="sig-item">General fatigue and elevated HR during the first 3–4 minutes of conditioning sessions, especially weeks 1–3.</div>
+    <div class="sig-item">Mild thoracic morning stiffness that resolves fully within 20 minutes of movement and warm-up.</div>
+    <div class="sig-item">Mild bilateral quad and glute soreness after heavy lower body weeks (4–5). This is normal progressive overload response.</div>
+    <div class="sig-item">HR taking longer to recover between intervals in weeks 3–5 — this is a positive aerobic adaptation under accumulated fatigue. It resolves as conditioning improves.</div>
+    <div class="sig-item">General training-day fatigue that is fully resolved within 24 hours and does not compound week-to-week.</div>
+  </div>
+</div>
+
+<!-- ===================== SELF-CHECK PANEL ===================== -->
+<div class="panel" id="panel-selfcheck">
+  <div class="clinical-note">
+    <strong>When to perform:</strong> Before your first session of every week. Takes 5 minutes. Run through all four checks before making any load decisions for that week. Your self-assessment background makes you well-placed to use these accurately.
+  </div>
+
+  <div class="check-card">
+    <div class="check-num">CHECK 01 / 04</div>
+    <div class="check-title">Right Hamstring Symmetry Test</div>
+    <div class="check-desc">Perform 5 bodyweight single-leg RDLs on each side. Assess: does the right feel significantly weaker, less stable, or produce posterior thigh discomfort compared to the left? Note the quality of the hip hinge — is the right pelvis dropping or rotating compared to the left?</div>
+    <div class="check-pass">PASS → Proceed with programmed hamstring loading for the week</div>
+    <div class="check-fail">FAIL → Reduce hamstring loading that week. Do not progress Nordic curl. Reassess next week.</div>
+  </div>
+
+  <div class="check-card">
+    <div class="check-num">CHECK 02 / 04</div>
+    <div class="check-title">Right Ankle Proprioception Check</div>
+    <div class="check-desc">30-second single-leg stance on the right foot, eyes closed. Count the number of touch-down corrections. By week 3, you should complete this with minimal to no corrections. This is not just a balance test — it's a real-time read on the neuromuscular status of the peroneal stabiliser chain.</div>
+    <div class="check-pass">PASS → Proprioceptive progression on track. Maintain current prehab volume.</div>
+    <div class="check-fail">FAIL (past week 3) → Proprioceptive regression. Add one extra prehab set before every session that week. Do not increase single-leg loading until the check passes.</div>
+  </div>
+
+  <div class="check-card">
+    <div class="check-num">CHECK 03 / 04</div>
+    <div class="check-title">Thoracic Rotation Screen</div>
+    <div class="check-desc">Seated upright on a flat chair, arms crossed on your chest. Rotate fully to the left, then fully to the right. Assess: is range approximately equal? Is there pain, catching, or sharp sensation at end-range on either side? Restricted or painful right rotation implicates the right T10–12 facet — the primary at-risk segment for your injury history.</div>
+    <div class="check-pass">PASS → Proceed with normal axial loading for the session.</div>
+    <div class="check-fail">FAIL → No axial loading that session until mobility improves during warm-up foam rolling. If restriction persists through warm-up: substitute bike/rower for all loaded spinal movements and review with your physio if it occurs two weeks in a row.</div>
+  </div>
+
+  <div class="check-card">
+    <div class="check-num">CHECK 04 / 04</div>
+    <div class="check-title">Resting HR / HRV (if you use a wearable)</div>
+    <div class="check-desc">Check your resting heart rate and HRV first thing in the morning before session 1 of each week. A resting HR more than 5–7 bpm above your personal baseline, or an HRV more than 10% below your 7-day rolling average, is a meaningful under-recovery signal. Accumulated fatigue with your injury profile is a genuine risk amplifier — this is load management science, not a rest-day mindset.</div>
+    <div class="check-pass">PASS → Normal recovery status. Proceed as programmed.</div>
+    <div class="check-fail">FAIL → Downgrade that session to technique and mobility work only. Do not push training load. Reassess the next day before deciding whether to skip or proceed.</div>
+  </div>
+</div>
+
+<!-- ===================== LOG PANEL ===================== -->
+<div class="panel" id="panel-log">
+  <div id="log-week-row" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;"></div>
+  <div id="log-day-tabs" style="display:flex;gap:6px;margin-bottom:16px;"></div>
+  <div id="log-form-area"></div>
+  <div style="margin-top:24px;">
+    <div class="section-title" style="margin-top:0;">Session History</div>
+    <div id="log-history"></div>
+  </div>
+</div>
+
+<style>
+/* LOG STYLES */
+.log-day-btn{font-family:'DM Mono',monospace;font-size:11px;padding:6px 14px;border-radius:4px;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);cursor:pointer;transition:all .15s;}
+.log-day-btn.on-a{background:var(--navy);color:#fff;border-color:var(--navy);}
+.log-day-btn.on-b{background:var(--green);color:#fff;border-color:var(--green);}
+.log-day-btn.on-c{background:#7a3e00;color:var(--orange);border-color:rgba(255,153,0,.4);}
+
+.log-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px;}
+.log-ex-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:10px;}
+.log-fields{display:grid;grid-template-columns:1fr 1fr 2fr;gap:8px;}
+@media(max-width:500px){.log-fields{grid-template-columns:1fr 1fr;}}
+.log-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);margin-bottom:4px;letter-spacing:.06em;text-transform:uppercase;}
+.log-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 10px;outline:none;transition:border-color .15s;}
+.log-input:focus{border-color:var(--orange);}
+.log-input::placeholder{color:var(--text-dim);}
+.log-save-btn{margin-top:16px;width:100%;padding:10px;background:var(--orange);color:#1a0d00;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;border:none;border-radius:5px;cursor:pointer;letter-spacing:.04em;transition:opacity .15s;}
+.log-save-btn:hover{opacity:.88;}
+.log-saved-msg{font-family:'DM Mono',monospace;font-size:11px;color:#4caf79;margin-top:8px;display:none;}
+
+.hist-entry{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden;}
+.hist-header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;}
+.hist-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text);}
+.hist-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);}
+.hist-delete{font-family:'DM Mono',monospace;font-size:10px;color:var(--red);cursor:pointer;padding:2px 6px;border:1px solid rgba(237,28,36,.3);border-radius:3px;background:rgba(237,28,36,.07);}
+.hist-body{padding:12px 14px;display:none;}
+.hist-body.open{display:block;}
+.hist-row{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid rgba(48,54,61,.5);font-size:12px;}
+.hist-row:last-child{border-bottom:none;}
+.hist-exname{color:var(--text);flex:1;}
+.hist-val{font-family:'DM Mono',monospace;color:var(--text-muted);white-space:nowrap;}
+.hist-notes{font-size:12px;color:var(--text-muted);margin-top:8px;font-style:italic;padding-top:6px;border-top:1px solid rgba(48,54,61,.5);}
+.no-hist{font-size:12px;color:var(--text-dim);font-family:'DM Mono',monospace;text-align:center;padding:24px;border:1px dashed var(--border);border-radius:6px;}
+</style>
+
+<script>
+// ===================== DATA =====================
+const phases = {
+  1: {
+    label: 'PHASE 1 — Foundation',
+    weeks: [1, 2],
+    cls: 'p1',
+    desc: '<strong>Goal: movement quality and tissue reconditioning.</strong> RPE capped at 6 — leave 4 reps in reserve on every set. Volume is deliberately low. Connective tissue and tendon adaptation lags significantly behind perceived strength in returning athletes, especially with your injury profile. <strong>Do not be tempted to add sets or intensity</strong> because sessions feel manageable.'
+  },
+  2: {
+    label: 'PHASE 2 — Build',
+    weeks: [3, 4, 5],
+    cls: 'p2',
+    desc: '<strong>Goal: progressive overload and aerobic base.</strong> RPE progresses to 7 from week 4. Running builds to 2 × 1km intervals. Sled load increases only when thoracic bracing posture holds throughout. Right hamstring eccentric loading progresses on the Nordic curl — do not rush or substitute concentric loading prematurely.'
+  },
+  3: {
+    label: 'PHASE 3 — Race-specific',
+    weeks: [6, 7],
+    cls: 'p3',
+    desc: '<strong>Goal: Doubles-specific fitness and race simulation.</strong> RPE 7–8 on key lifts. Conditioning at near-race pace. Volume stays conservative — this phase is about sharpening, not accumulating. Confirm all right-side loading is pain-free before increasing any intensity. One partial Doubles simulation on Day C per week.'
+  },
+  4: {
+    label: 'PHASE 4 — Taper',
+    weeks: [8],
+    cls: 'p4',
+    desc: '<strong>Goal: freshness, confidence, and tissue readiness.</strong> Volume cut 40–50% from Phase 3. Two sessions only — Day A and Day B. Day C becomes active recovery or full rest. Do not add extra sessions because you feel under-trained. That feeling is correct and intentional — supercompensation requires the full recovery window to complete.'
+  }
+};
+
+const program = {
+  // ---- PHASE 1 (Weeks 1-2) ----
+  1: {
+    A: {
+      label: 'Day A — Strength', color: '#004A80', subtype: 'Lower & Upper · RPE ≤ 6',
+      ex: [
+        ['Goblet squat', '3 × 8', false],
+        ['B-stance RDL (left lead)', '2 × 10', true],
+        ['Single-leg hip thrust (left lead)', '2 × 10 ea.', true],
+        ['Seated cable row', '2 × 12', false],
+        ['Pallof press', '2 × 10 ea.', false]
+      ],
+      tags: ['~30 min', 'RPE 6 cap', 'Left bias']
+    },
+    B: {
+      label: 'Day B — Conditioning', color: '#006738', subtype: 'Aerobic base · RPE ≤ 6',
+      ex: [
+        ['Easy ski erg (arms-only first 60s)', '3 × 2 min / 90s rest', true],
+        ['Sled push (light — posture focus)', '3 × 15m', true],
+        ['Rower', '2 × 4 min @ RPE 5–6', false],
+        ['Sandbag carry', '3 × 20m', false]
+      ],
+      tags: ['~30 min', 'RPE 5–6', 'Posture priority']
+    },
+    C: {
+      label: 'Day C — Hybrid', color: '#7a3e00', subtype: 'Mixed quality movement',
+      ex: [
+        ['Easy jog (conversational)', '2 × 800m', true],
+        ['Wall balls 6kg', '3 × 10', false],
+        ['Farmers carry', '3 × 30m', false],
+        ['Ski erg easy', '2 × 90s', false],
+        ['Foam roll + hip flexor stretch', '10 min cooldown', true]
+      ],
+      tags: ['~80 min total', 'RPE 5–6', 'Mobility close']
+    }
+  },
+  2: {
+    A: {
+      label: 'Day A — Strength', color: '#004A80', subtype: 'Lower & Upper · RPE ≤ 6',
+      ex: [
+        ['Goblet squat', '3 × 8', false],
+        ['B-stance RDL (left lead)', '2 × 10', true],
+        ['Single-leg hip thrust (left lead)', '2 × 10 ea.', true],
+        ['Seated cable row', '2 × 12', false],
+        ['Pallof press', '2 × 10 ea.', false]
+      ],
+      tags: ['~30 min', 'RPE 6 cap', 'Same as Wk 1 — quality focus']
+    },
+    B: {
+      label: 'Day B — Conditioning', color: '#006738', subtype: 'Aerobic base · RPE ≤ 6',
+      ex: [
+        ['Easy ski erg', '3 × 2 min / 90s rest', true],
+        ['Sled push (light)', '3 × 15m', true],
+        ['Rower', '2 × 4 min @ RPE 5–6', false],
+        ['Sandbag carry', '3 × 20m', false]
+      ],
+      tags: ['~30 min', 'RPE 5–6', 'Same as Wk 1']
+    },
+    C: {
+      label: 'Day C — Hybrid', color: '#7a3e00', subtype: 'Mixed quality movement',
+      ex: [
+        ['Easy jog', '2 × 800m', true],
+        ['Wall balls 6kg', '3 × 12', false],
+        ['Farmers carry', '3 × 30m', false],
+        ['Ski erg easy', '2 × 90s', false],
+        ['Foam roll + mobility', '10 min', true]
+      ],
+      tags: ['~80 min total', 'RPE 5–6', '+2 wall ball reps vs Wk 1']
+    }
+  },
+  // ---- PHASE 2 (Weeks 3-5) ----
+  3: {
+    A: {
+      label: 'Day A — Strength', color: '#004A80', subtype: 'Lower & Upper · RPE 6–7',
+      ex: [
+        ['Trap bar deadlift', '3 × 5 @ RPE 6–7', false],
+        ['Bulgarian split squat (right conservative)', '2 × 8 ea.', true],
+        ['Nordic curl negatives', '2 × 5', true],
+        ['Hip thrust bilateral', '3 × 8', false],
+        ['Chest-supported row', '3 × 10', true]
+      ],
+      tags: ['~35 min', 'RPE 6–7', 'Eccentric focus']
+    },
+    B: {
+      label: 'Day B — Conditioning', color: '#006738', subtype: 'Intervals · RPE 6–7',
+      ex: [
+        ['Ski erg intervals', '4 × 90s @ RPE 6–7 / 75s rest', true],
+        ['Sled push (moderate load)', '4 × 20m', true],
+        ['Run intervals', '2 × 1km @ moderate effort', true],
+        ['Farmers carry', '3 × 40m', false]
+      ],
+      tags: ['~35 min', 'RPE 6–7', 'Volume ↑ vs Phase 1']
+    },
+    C: {
+      label: 'Day C — Hybrid', color: '#7a3e00', subtype: 'Station circuit',
+      ex: [
+        ['1km run → sled push → ski erg → 1km run', '1 round', true],
+        ['Wall balls 6–8kg', '3 × 15', false],
+        ['Sandbag carry', '3 × 30m', false],
+        ['Cooldown mobility', '10 min', true]
+      ],
+      tags: ['~80 min total', 'RPE 6', 'Race-shape practice']
+    }
+  },
+  4: {
+    A: {
+      label: 'Day A — Strength', color: '#004A80', subtype: 'Lower & Upper · RPE 7',
+      ex: [
+        ['Trap bar deadlift', '3 × 5 @ RPE 7', false],
+        ['Bulgarian split squat', '3 × 8 ea.', true],
+        ['Nordic curl negatives', '2 × 5', true],
+        ['Hip thrust bilateral', '3 × 8', false],
+        ['Chest-supported row', '3 × 10', true]
+      ],
+      tags: ['~35 min', 'RPE 7', 'Load ↑ from Wk 3']
+    },
+    B: {
+      label: 'Day B — Conditioning', color: '#006738', subtype: 'Intervals · RPE 7',
+      ex: [
+        ['Ski erg intervals', '4 × 90s @ RPE 7 / 60s rest', true],
+        ['Sled push (moderate–heavy)', '4 × 20m', true],
+        ['Run intervals', '2 × 1km @ RPE 7', true],
+        ['Farmers carry', '3 × 40m', false]
+      ],
+      tags: ['~35 min', 'RPE 7', 'Rest periods tighten']
+    },
+    C: {
+      label: 'Day C — Hybrid', color: '#7a3e00', subtype: 'Station circuit',
+      ex: [
+        ['1km run → sled push → ski erg → 1km run', '1 round', true],
+        ['Wall balls 8kg', '3 × 15', false],
+        ['Sandbag carry', '3 × 30m', false],
+        ['Cooldown mobility', '10 min', true]
+      ],
+      tags: ['~80 min total', 'RPE 7', '8kg wall ball']
+    }
+  },
+  5: {
+    A: {
+      label: 'Day A — Strength', color: '#004A80', subtype: 'Lower & Upper · RPE 7',
+      ex: [
+        ['Trap bar deadlift', '3 × 5 @ RPE 7', false],
+        ['Bulgarian split squat', '3 × 8 ea.', true],
+        ['Nordic curl negatives', '3 × 5', true],
+        ['Hip thrust bilateral', '3 × 10', false],
+        ['Chest-supported row', '3 × 12', true]
+      ],
+      tags: ['~35 min', 'RPE 7', 'Nordic sets ↑']
+    },
+    B: {
+      label: 'Day B — Conditioning', color: '#006738', subtype: 'Intervals · RPE 7',
+      ex: [
+        ['Ski erg intervals', '4 × 2 min @ RPE 7 / 60s rest', true],
+        ['Sled push (moderate–heavy)', '4 × 25m', true],
+        ['Run intervals', '2 × 1km @ RPE 7–8', true],
+        ['Farmers carry', '3 × 40m', false]
+      ],
+      tags: ['~35 min', 'RPE 7', 'Sled distance ↑']
+    },
+    C: {
+      label: 'Day C — Hybrid', color: '#7a3e00', subtype: 'Station circuit',
+      ex: [
+        ['2km run → sled push → ski erg → sandbag carry', '1 round', true],
+        ['Wall balls 8kg', '3 × 15', false],
+        ['Farmers carry', '3 × 40m', false],
+        ['Cooldown mobility', '10 min', true]
+      ],
+      tags: ['~80 min total', 'RPE 7', 'Circuit complexity ↑']
+    }
+  },
+  // ---- PHASE 3 (Weeks 6-7) ----
+  6: {
+    A: {
+      label: 'Day A — Strength', color: '#004A80', subtype: 'Lower & Upper · RPE 7–8',
+      ex: [
+        ['Trap bar deadlift', '3 × 4 @ RPE 7–8', false],
+        ['Bulgarian split squat', '3 × 6 ea.', true],
+        ['Nordic curl (progressing toward full)', '3 × 5', true],
+        ['Hip thrust', '3 × 6 @ RPE 7', false],
+        ['Cable row', '2 × 10', true]
+      ],
+      tags: ['~35 min', 'RPE 7–8', 'Intensity priority']
+    },
+    B: {
+      label: 'Day B — Conditioning', color: '#006738', subtype: 'Race pace · RPE 8',
+      ex: [
+        ['Run intervals at target race pace', '2 × 1km', true],
+        ['Ski erg @ race effort', '3 × 2 min', true],
+        ['Sled push race load', '3 × 20m', true],
+        ['Wall balls + farmers carry', '2 rounds ea.', false]
+      ],
+      tags: ['~35 min', 'RPE 8', 'Race pace benchmark']
+    },
+    C: {
+      label: 'Day C — Race Simulation', color: '#7a3e00', subtype: 'Doubles practice',
+      ex: [
+        ['Partial Doubles sim: 3 stations + 1km run', '2 rounds @ moderate pace', true],
+        ['Transitions and pacing practice', 'Focus drill', false],
+        ['Mobility cooldown', '15 min', true]
+      ],
+      tags: ['~80 min total', 'RPE 6–7', 'Race rehearsal']
+    }
+  },
+  7: {
+    A: {
+      label: 'Day A — Strength', color: '#004A80', subtype: 'Lower & Upper · RPE 7–8',
+      ex: [
+        ['Trap bar deadlift', '3 × 4 @ RPE 7–8', false],
+        ['Bulgarian split squat', '3 × 6 ea.', true],
+        ['Nordic curl (near full ROM)', '3 × 5', true],
+        ['Hip thrust', '3 × 6 @ RPE 7–8', false],
+        ['Cable row', '2 × 10', true]
+      ],
+      tags: ['~35 min', 'RPE 8', 'Final strength peak']
+    },
+    B: {
+      label: 'Day B — Conditioning', color: '#006738', subtype: 'Race pace · RPE 8',
+      ex: [
+        ['Run intervals at race pace', '2 × 1km', true],
+        ['Ski erg @ race effort', '3 × 2 min', true],
+        ['Sled push race load', '3 × 20m', true],
+        ['Wall balls + farmers carry', '2 rounds ea.', false]
+      ],
+      tags: ['~35 min', 'RPE 8', 'Same as Wk 6 — execute better']
+    },
+    C: {
+      label: 'Day C — Race Simulation', color: '#7a3e00', subtype: 'Doubles practice',
+      ex: [
+        ['Partial Doubles sim: 4 stations + 1km run', '2 rounds', true],
+        ['Transitions and pace awareness', 'Focus drill', false],
+        ['Extended mobility cooldown', '15 min', true]
+      ],
+      tags: ['~80 min total', 'RPE 7', '+1 station vs Wk 6']
+    }
+  },
+  // ---- PHASE 4 (Week 8) ----
+  8: {
+    A: {
+      label: 'Day A — Strength (Taper)', color: '#404041', subtype: 'Reduced volume · RPE ≤ 6',
+      ex: [
+        ['Trap bar deadlift', '2 × 3 @ RPE 6', false],
+        ['Split squat', '2 × 5 ea.', true],
+        ['Hip thrust', '2 × 6', false],
+        ['Cable row', '2 × 8', false]
+      ],
+      tags: ['~25 min', 'Volume –50%', 'Quality only']
+    },
+    B: {
+      label: 'Day B — Conditioning (Taper)', color: '#404041', subtype: 'Reduced volume · RPE ≤ 6',
+      ex: [
+        ['Easy ski erg', '2 × 90s @ easy', true],
+        ['Sled push (light)', '2 × 15m', true],
+        ['Run (easy)', '1 × 800m @ conversational pace', true]
+      ],
+      tags: ['~20 min', 'Volume –50%', 'Feel good focus']
+    },
+    C: {
+      label: 'Day C — Active Recovery', color: '#404041', subtype: 'No training load',
+      ex: [
+        ['Walk', '20–30 min easy', false],
+        ['Foam rolling', 'Full body', true],
+        ['Mobility flow', '10–15 min', true]
+      ],
+      tags: ['Active rest', 'No intensity', 'Trust the process']
+    }
+  }
+};
+
+const phaseNotes = {
+  1: '<div class="taper-note"><strong>Phase 1 reminder:</strong> With only a few weeks back in the gym, these sessions will feel easy. That is intentional. Connective tissue adaptation to load lags behind muscular recovery by weeks — the architecture of the tendons, ligaments, and joint capsules around your injured ankle, knee, and thoracic segment needs this lower-load entry phase to remodel safely. Do not progress ahead of the schedule.</div>',
+  2: '<div class="taper-note"><strong>Phase 2 reminder:</strong> RPE 7 from week 4 means you should be working at a level where you could do 3 more reps but choose not to. As a reconditioning block for an experienced lifter, you will likely feel the neuromuscular fitness returning rapidly in weeks 3–5 — this is a positive sign. Continue to let the program drive the progression rather than perceived readiness.</div>',
+  3: '<div class="taper-note"><strong>Phase 3 reminder:</strong> Confirm all right-side loading remains pain-free before pushing to RPE 8. The race simulation on Day C is the most important session of these two weeks — use it to identify any weaknesses in your Doubles pacing and transition efficiency. Reduce Day A load by one set if Day C leaves residual fatigue into the next Day A.</div>',
+  4: '<div class="taper-note"><strong>Taper week reminder:</strong> Race day is close. Your job this week is to arrive fresh, not to squeeze extra fitness. Two sessions maximum. Day C is rest or a walk. Do not train extra because you feel good. Before race day: right ankle single-leg stance 30s eyes closed (stable?), right hamstring symmetric response, thoracic rotation equal and pain-free. If any fail, consult your physio before competing. Race-day warm-up: 15–20 min — easy jog 3–4 min, ski erg 2×60s easy, bodyweight squats ×15, hip flexor stretch, ankle circles, thoracic open books ×10 each side.</div>'
+};
+
+// ===================== STATE =====================
+let currentPhase = 1;
+let currentWeek = 1;
+
+// ===================== RENDER =====================
+function setPhase(p) {
+  currentPhase = p;
+  currentWeek = phases[p].weeks[0];
+  document.querySelectorAll('.phase-btn').forEach((b, i) => {
+    b.classList.toggle('on', i + 1 === p);
+  });
+  renderWeekTabs();
+  renderPhaseInfo();
+  renderDays();
+  renderNotes();
+}
+
+function setWeek(w) {
+  currentWeek = w;
+  document.querySelectorAll('.week-btn').forEach(b => {
+    b.classList.toggle('on', parseInt(b.dataset.w) === w);
+  });
+  renderDays();
+}
+
+function renderWeekTabs() {
+  const container = document.getElementById('week-row');
+  container.innerHTML = '';
+  phases[currentPhase].weeks.forEach(w => {
+    const btn = document.createElement('button');
+    btn.className = 'week-btn' + (w === currentWeek ? ' on' : '');
+    btn.dataset.w = w;
+    btn.textContent = 'Week ' + w;
+    btn.onclick = () => setWeek(w);
+    container.appendChild(btn);
+  });
+}
+
+function renderPhaseInfo() {
+  document.getElementById('phase-info').innerHTML = phases[currentPhase].desc;
+}
+
+function renderDays() {
+  const grid = document.getElementById('day-grid');
+  const data = program[currentWeek];
+  const days = ['A', 'B', 'C'];
+  const headerClasses = ['dh-a', 'dh-b', 'dh-c'];
+
+  grid.innerHTML = days.map((d, i) => {
+    const day = data[d];
+    const exRows = day.ex.map(ex => `
+      <div class="ex-row">
+        <div class="ex-name">${ex[0]}${ex[2] ? '<span class="mod-tag">mod</span>' : ''}</div>
+        <div class="ex-sets">${ex[1]}</div>
+      </div>
+    `).join('');
+    const tags = day.tags.map(t => `<span class="ftag">${t}</span>`).join('');
+    return `
+      <div class="day-card">
+        <div class="day-header ${headerClasses[i]}">${day.label}</div>
+        <div class="day-subtype">${day.subtype}</div>
+        <div class="day-body">${exRows}</div>
+        <div class="day-footer">${tags}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderNotes() {
+  document.getElementById('phase-notes').innerHTML = phaseNotes[currentPhase];
+}
+
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.mnav-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById('panel-' + name).classList.add('on');
+  const names = ['program', 'warmup', 'injury', 'signals', 'selfcheck', 'log'];
+  document.querySelectorAll('.mnav-btn')[names.indexOf(name)].classList.add('on');
+  if (name === 'log') initLog();
+}
+
+// ===================== TRAINING LOG =====================
+let logWeek = 1;
+let logDay = 'A';
+
+function initLog() {
+  // Week tabs
+  const wr = document.getElementById('log-week-row');
+  wr.innerHTML = '';
+  for (let w = 1; w <= 8; w++) {
+    const b = document.createElement('button');
+    b.className = 'week-btn' + (w === logWeek ? ' on' : '');
+    b.textContent = 'Week ' + w;
+    b.onclick = () => { logWeek = w; initLog(); };
+    wr.appendChild(b);
+  }
+
+  // Day tabs
+  const dt = document.getElementById('log-day-tabs');
+  dt.innerHTML = '';
+  ['A', 'B', 'C'].forEach(d => {
+    const b = document.createElement('button');
+    b.className = 'log-day-btn' + (d === logDay ? ' on-' + d.toLowerCase() : '');
+    b.textContent = 'Day ' + d;
+    b.onclick = () => { logDay = d; initLog(); };
+    dt.appendChild(b);
+  });
+
+  renderLogForm();
+  renderLogHistory();
+}
+
+function renderLogForm() {
+  const dayData = program[logWeek][logDay];
+  const area = document.getElementById('log-form-area');
+
+  const cards = dayData.ex.map((ex, idx) => `
+    <div class="log-card">
+      <div class="log-ex-name">${ex[0]}${ex[2] ? '<span class="mod-tag" style="margin-left:6px;">mod</span>' : ''}</div>
+      <div class="log-fields">
+        <div>
+          <div class="log-label">Weight (kg)</div>
+          <input class="log-input" type="number" step="0.5" placeholder="e.g. 40" id="log-wt-${idx}" min="0">
+        </div>
+        <div>
+          <div class="log-label">Sets × Reps</div>
+          <input class="log-input" type="text" placeholder="e.g. 3×8" id="log-sr-${idx}">
+        </div>
+        <div style="grid-column: span 1;">
+          <div class="log-label">Notes</div>
+          <input class="log-input" type="text" placeholder="e.g. felt heavy, mod depth" id="log-nt-${idx}">
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  area.innerHTML = `
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);margin-bottom:12px;letter-spacing:.06em;">
+      WEEK ${logWeek} · DAY ${logDay} · ${dayData.subtype.toUpperCase()}
+    </div>
+    ${cards}
+    <div style="margin-top:6px;">
+      <div class="log-label">Session notes</div>
+      <input class="log-input" type="text" placeholder="Overall session feel, fatigue, anything notable..." id="log-session-notes" style="margin-top:4px;">
+    </div>
+    <button class="log-save-btn" onclick="saveLog()">Save Session</button>
+    <div class="log-saved-msg" id="log-saved-msg">✓ Saved successfully</div>
+  `;
+}
+
+function saveLog() {
+  const dayData = program[logWeek][logDay];
+  const entries = dayData.ex.map((ex, idx) => ({
+    name: ex[0],
+    weight: document.getElementById('log-wt-' + idx).value,
+    setsReps: document.getElementById('log-sr-' + idx).value,
+    notes: document.getElementById('log-nt-' + idx).value
+  }));
+  const sessionNotes = document.getElementById('log-session-notes').value;
+  const key = 'hyrox-log-w' + logWeek + '-d' + logDay + '-' + Date.now();
+  const record = {
+    week: logWeek,
+    day: logDay,
+    date: new Date().toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short', year:'numeric'}),
+    entries,
+    sessionNotes
+  };
+  localStorage.setItem(key, JSON.stringify(record));
+
+  const msg = document.getElementById('log-saved-msg');
+  msg.style.display = 'block';
+  setTimeout(() => { msg.style.display = 'none'; }, 2500);
+  renderLogHistory();
+
+  // Clear inputs
+  dayData.ex.forEach((_, idx) => {
+    document.getElementById('log-wt-' + idx).value = '';
+    document.getElementById('log-sr-' + idx).value = '';
+    document.getElementById('log-nt-' + idx).value = '';
+  });
+  document.getElementById('log-session-notes').value = '';
+}
+
+function renderLogHistory() {
+  const container = document.getElementById('log-history');
+  const keys = Object.keys(localStorage)
+    .filter(k => k.startsWith('hyrox-log-w' + logWeek + '-d' + logDay))
+    .sort()
+    .reverse();
+
+  if (!keys.length) {
+    container.innerHTML = '<div class="no-hist">No sessions logged for Week ' + logWeek + ' · Day ' + logDay + ' yet.</div>';
+    return;
+  }
+
+  container.innerHTML = keys.map((k, i) => {
+    const r = JSON.parse(localStorage.getItem(k));
+    const rows = r.entries.map(e => {
+      const parts = [];
+      if (e.weight) parts.push(e.weight + ' kg');
+      if (e.setsReps) parts.push(e.setsReps);
+      return `<div class="hist-row"><span class="hist-exname">${e.name}</span><span class="hist-val">${parts.join(' · ') || '—'}</span>${e.notes ? '<span class="hist-val" style="color:var(--text-dim);font-family:\'DM Sans\',sans-serif;font-style:italic;">' + e.notes + '</span>' : ''}</div>`;
+    }).join('');
+    const notes = r.sessionNotes ? `<div class="hist-notes">${r.sessionNotes}</div>` : '';
+    return `
+      <div class="hist-entry">
+        <div class="hist-header" onclick="toggleHist(this)">
+          <div>
+            <div class="hist-title">Session — ${r.date}</div>
+            <div class="hist-meta">Week ${r.week} · Day ${r.day}</div>
+          </div>
+          <button class="hist-delete" onclick="deleteLog(event, '${k}')">Delete</button>
+        </div>
+        <div class="hist-body ${i === 0 ? 'open' : ''}">${rows}${notes}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleHist(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+function deleteLog(e, key) {
+  e.stopPropagation();
+  if (confirm('Delete this session log?')) {
+    localStorage.removeItem(key);
+    renderLogHistory();
+  }
+}
+
+// ===================== INIT =====================
+renderWeekTabs();
+renderPhaseInfo();
+renderDays();
+renderNotes();
+</script>
+</body>
+</html>
